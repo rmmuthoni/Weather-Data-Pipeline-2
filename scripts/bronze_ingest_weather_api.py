@@ -28,5 +28,5 @@ def run_bronze_ingestion(**context):
     with open(file_path, "w") as f:
         json.dump(data, f)
 
-    # Push the path to the downstream task instances
-    context["ti"].xcom_push(key="bronze_weather_data_file", values=str(file_path))
+    # Push the path to the / four use by downstream task instances
+    context["ti"].xcom_push(key="bronze_weather_data_file", value=str(file_path))

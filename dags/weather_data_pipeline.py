@@ -1,18 +1,16 @@
-# from airflow.sdk import DAG
+import sys 
+from pathlib import Path
 from airflow.providers.standard.operators.python import PythonOperator 
 from datetime import datetime, timedelta 
 from airflow import DAG
 
+# HOME Path 
+AIRFLOW_HOME = Path("/opt/airflow") 
+if str(AIRFLOW_HOME) not in sys.path:
+    sys.path.insert(0, str(AIRFLOW_HOME))
 
+from scripts.bronze_ingest_weather_api import run_bronze_ingestion
 
-def extract_job():
-    print("Extraction Job")
-
-def transformation_job():
-    print("Transformation JOb") 
-
-def loading_job():
-    print("Loading Job") 
 
 
 
@@ -29,26 +27,18 @@ with DAG(
     dag_id="weather_data_pipeline",
     default_args=default_args,
     description="Weather Data Pipeline - Move Data from OPen Weather Map API's to a Postgres Warehouse",
-    schedule=timedelta(minutes=5),
+    schedule=timedelta(hours=1),
     start_date=datetime(2026, 1, 1),
     catchup=False,
     tags=["etl", "weather etl"]
 ) as dag:
 
-    extraction_task = PythonOperator(
-        task_id="extraction_job",
-        python_callable=extract_job
+    bronze = PythonOperator(
+        task_id="bronze_weather_ingest",
+        python_callable=run_bronze_ingestion
     )
 
-    transformation_task = PythonOperator(
-        task_id="transformation_job",
-        python_callable=transformation_job
-    )
-
-    loading_task = PythonOperator(
-        task_id="loading_job",
-        python_callable=loading_job
-    )
+    
 
 
-    extraction_task >> transformation_task >> loading_task 
+
