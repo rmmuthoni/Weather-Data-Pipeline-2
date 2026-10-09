@@ -42,6 +42,9 @@ PostgreSQL Database
 Dashboards and Business Intelligence Tools
 ```
 
+<img width="753" height="197" alt="open_weather_pipe_architecture" src="https://github.com/user-attachments/assets/badd0794-3e49-4ca7-ba54-b43d56076cc6" />
+
+
 ## Technologies
 
 - **Apache Airflow** — workflow orchestration and scheduled batch execution.
