@@ -11,6 +11,7 @@ if str(AIRFLOW_HOME) not in sys.path:
 
 from scripts.bronze_ingest_weather_api import run_bronze_ingestion
 from scripts.silver_transform_weather_data import run_silver_transformation
+from scripts.load_silver_to_warehouse import load_silver_data_to_warehouse
 
 
 
@@ -44,8 +45,13 @@ with DAG(
         python_callable=run_silver_transformation
     )
 
+    load = PythonOperator(
+        task_id="load_to_warehouse",
+        python_callable=load_silver_data_to_warehouse
+    )
+
     # Execution Order
-    bronze >> silver
+    bronze >> silver >> load
 
     
 

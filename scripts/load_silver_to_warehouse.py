@@ -30,5 +30,16 @@ def load_silver_data_to_warehouse(**context) -> None:
     # Ccreate a dataframe from this json data 
     weather_data_df = pd.DataFrame([silver_weather_data])
 
+    # Push to the warehouse 
+    try:
+        weather_data_df.to_sql(
+            name="weather_data",
+            schema="open_weather_map",
+            con=DATABASE_ENGINE,
+            if_exists="append",
+            index=False
+        )
+    except Exception as e:
+        print("Error, COuld not load the data to the warehouse")
 
-print(DATABASE_ENGINE)
+

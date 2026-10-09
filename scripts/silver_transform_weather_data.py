@@ -1,5 +1,6 @@
 import json 
 from pathlib import Path 
+from datetime import datetime
 
 
 def run_silver_transformation(**context) -> None:
@@ -24,6 +25,7 @@ def run_silver_transformation(**context) -> None:
 
     # TRansformations 
     cleaned_weather_data = {
+        "created_at": datetime.now().isoformat(),
         "temperature": raw_data.get("main", {}).get("temp"),
         "temperature_feels_like": raw_data.get("main", {}).get("feels_like"),
         "temperature_min": raw_data.get("main", {}).get("temp_min"),
