@@ -10,6 +10,7 @@ if str(AIRFLOW_HOME) not in sys.path:
     sys.path.insert(0, str(AIRFLOW_HOME))
 
 from scripts.bronze_ingest_weather_api import run_bronze_ingestion
+from scripts.silver_transform_weather_data import run_silver_transformation
 
 
 
@@ -37,6 +38,14 @@ with DAG(
         task_id="bronze_weather_ingest",
         python_callable=run_bronze_ingestion
     )
+
+    silver = PythonOperator(
+        task_id="silver_weather_transform",
+        python_callable=run_silver_transformation
+    )
+
+    # Execution Order
+    bronze >> silver
 
     
 

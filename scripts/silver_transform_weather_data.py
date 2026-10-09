@@ -37,7 +37,7 @@ def run_silver_transformation(**context) -> None:
     }
 
     # Save the data to silver layer 
-    output_file = silver_file_path / f"weather_data_{dag_execution_date}.csv"
+    output_file = silver_file_path / f"weather_data_{dag_execution_date}.json"
     with open(output_file, "w") as f:
         json.dump(cleaned_weather_data, f)
 
