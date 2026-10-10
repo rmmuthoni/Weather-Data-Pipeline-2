@@ -29,7 +29,7 @@ with DAG(
     dag_id="weather_data_pipeline",
     default_args=default_args,
     description="Weather Data Pipeline - Move Data from OPen Weather Map API's to a Postgres Warehouse",
-    schedule=timedelta(hours=1),
+    schedule=timedelta(minutes=10),
     start_date=datetime(2026, 1, 1),
     catchup=False,
     tags=["etl", "weather etl"]
