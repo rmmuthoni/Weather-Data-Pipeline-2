@@ -9,7 +9,8 @@ AIRFLOW_HOME = Path("/opt/airflow")
 if str(AIRFLOW_HOME) not in sys.path:
     sys.path.insert(0, str(AIRFLOW_HOME))
 
-from scripts.bronze_ingest_retail_customers import run_bronze_ingest_retail_customers 
+from scripts.bronze_ingest_retail_products import run_bronze_ingest_retail_products 
+from scripts.bronze_ingest_retail_customers import run_bronze_ingest_retail_customers
 
 
 # Define DAG
@@ -31,5 +32,12 @@ with DAG(
 
     bronze_extract_products = PythonOperator(
         task_id="bronze_extract_products",
+        python_callable=run_bronze_ingest_retail_products
+    )
+
+    bronze_extract_customers = PythonOperator(
+        task_id="bronze_extract_customers",
         python_callable=run_bronze_ingest_retail_customers
     )
+
+    [bronze_extract_products, bronze_extract_customers]
