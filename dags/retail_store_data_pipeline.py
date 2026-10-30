@@ -24,7 +24,7 @@ with DAG(
     dag_id="retail_store_data_pipeline",
     default_args=default_args,
     description="Moves the data from the E-commerce endpoints to the EDW for analytics",
-    schedule=timedelta(minutes=10),
+    schedule=timedelta(minutes=60),
     start_date=datetime(2026, 1, 1),
     catchup=False,
     tags=["etl", "ecomerce etl", "retail", "retail store"]

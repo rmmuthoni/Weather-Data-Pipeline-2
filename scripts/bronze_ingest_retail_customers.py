@@ -8,6 +8,8 @@ def run_bronze_ingest_retail_customers(**context) -> None:
     """Ingests Retail CUstomers from the Ecomerce ENdpoint"""
 
     CUSTOMER_DATA_ENDPOINT = "https://dummyjson.com/users?limit=0"
+
+    # Storage Location, CReate if not exists
     CUSTOMER_DATA_FOLDER = Path("/opt/airflow/data/bronze/retail_store/")
     CUSTOMER_DATA_FOLDER.mkdir(parents=True, exist_ok=True) 
 
